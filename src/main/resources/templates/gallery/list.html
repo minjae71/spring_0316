@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalale=no">
+    <title>MEAN_GALLERY</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/gallery.css}">
+    <style type="text/css">
+        .gnb li .gallery {
+            font-weight: bold;
+            color: #1e88e2;
+        }
+    </style>
+    <link rel="shortcut icon" th:href="@{/images/favicon/favicon.ico}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{images/favicon/flat-design-touch.png}">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/flat.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+    <section th:insert="common/sns.html" class="sns_section"></section>
+    <!-- Header -->
+    <header th:insert="common/header.html" id="header" class="header"></header>
+    <section class="sub_header_section">
+        <h2>Gallery</h2>
+        <ul class="breadcrum_list">
+            <li><a th:href="@{/}">Home /</a></li>
+            <li><a th:href="@{/gallery}">Gallery</a></li>
+        </ul>
+    </section>
+    <section class="content_section">
+        <div class="content_row">
+            <h3 class="title">PROFILE</h3>
+            <ul class="gallery_list">
+                <li>
+                    <a href="">
+                        <div class="info">
+                            <h3>Icheon</h3>
+                            <span>2004.01.</span>
+                        </div>
+                        <img src="images/p_images/gallery_01.jpg" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="info">
+                            <h3>Hwaseong</h3>
+                            <span>2016.06.</span>
+                        </div>
+                        <img src="images/p_images/gallery_02.jpg" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="info">
+                            <h3>Seoul</h3>
+                            <span>2019.10.</span>
+                        </div>
+                        <img src="images/p_images/gallery_03.jpg" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="info">
+                            <h3>Hwaseong</h3>
+                            <span>2020.04.</span>
+                        </div>
+                        <img src="images/p_images/gallery_04.jpg" alt="">
+                    </a>
+                </li>
+            </ul>
+            <div class="content_row">
+                <h3 class="title">LANDSCAPE</h3>
+                <ul class="gallery_list">
+                    <li>
+                        <a href="">
+                            <div class="info">
+                                <h3>Suwon</h3>
+                                <span>2019.09.</span>
+                            </div>
+                            <img src="images/p_images/gallery_05.jpg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="info">
+                                <h3>Hwaseong</h3>
+                                <span>2020.06.</span>
+                            </div>
+                            <img src="images/p_images/gallery_06.jpg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="info">
+                                <h3>Jecheon</h3>
+                                <span>2020.09.</span>
+                            </div>
+                            <img src="images/p_images/gallery_07.jpg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="info">
+                                <h3>Hongcheon</h3>
+                                <span>2020.07.</span>
+                            </div>
+                            <img src="images/p_images/gallery_08.jpg" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content_row">
+                <h3 class="title">ANIMAL</h3>
+                <ul class="gallery_list">
+                    <li>
+                        <a href="">
+                            <div class="info">
+                                <h3>Hwaseong</h3>
+                                <span>2020.04.</span>
+                            </div>
+                            <img src="images/p_images/gallery_09.jpg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="info">
+                                <h3>Gangneung</h3>
+                                <span>2020.08.</span>
+                            </div>
+                            <img src="images/p_images/gallery_10.jpg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="info">
+                                <h3>Hwaseong</h3>
+                                <span>2021.03.</span>
+                            </div>
+                            <img src="images/p_images/gallery_11.jpg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="info">
+                                <h3>Suwon</h3>
+                                <span>2020.09.</span>
+                            </div>
+                            <img src="images/p_images/gallery_12.jpg" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content_row_2">
+            <div class="search_box">
+                <form action="#" method="get">
+                    <input type="search" name="gallery_search_window" class="search_window" placeholder="Search">
+                    <div class="search_select_box">
+                        <span>Filter</span>
+                        <ul class="search_select_list">
+                            <li>제목</li><li>내용</li>
+                            <li>제목+내용</li><li>댓글</li>
+                            <li>이름</li>
+                            <li>닉네임</li>
+                            <li>아이디</li>
+                            <li>태그</li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="write_box"><a href="#">Write</a></div>
+        </div>
+        <div class="content_row_3">
+            <span class="list_prev_btn">갤러리 이전 버튼</span>
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <span class="list_next_btn">갤러리 다음 버튼</span>
+        </div>
+    </section>
+    <footer th:insert="common/footer.html" id="footer" class="footer"></footer>
+</div>
+</body>
+</html>

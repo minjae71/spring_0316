@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>엑셀 업로드</title>
+    <link rel="shortcut icon" th:href="@{/images/favicon/favicon.ico}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/images/favicon/flat-design-touch.png}">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/flat.min.js"></script>
+    <script src="js/board.js" th:inline="javascript"></script>
+    <script th:inline="javascript">
+        window.onload = function() {
+            var status= document.uploadFileForm.status.value;
+            if(status=="1")
+            {
+                window.opener.location.reload();
+                window.open("about:blank", "_self").close();
+            } else if(status=="2") {
+                alert("엑셀 파일(.xlsx)만 업로드 가능합니다.");
+            } else {
+                return false;
+            }
+        }
+
+        function checkStatus() {
+            alert("값은 " + document.uploadFileForm.status.value + "입니다.");
+        }
+
+    </script>
+</head>
+<body>
+<form name="uploadFileForm" th:action="@{/board/excel/uploadFile}" method="post" enctype="multipart/form-data">
+    <input type="file" th:name="file">
+
+    <button type="submit">제출</button>
+    <input type="hidden" name="status" value="0" th:value="${status}">
+    <button type="button" onclick="checkStatus()">확인</button>
+</form>
+
+</body>
+</html>

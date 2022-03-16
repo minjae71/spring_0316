@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+<header class="header">
+    <div class="logo">
+            <span class="logo_image">
+                <a th:href="@{/}"><img th:src="@{/images/s_images/logo.png}" alt="로고"></a></li>
+            </span>
+        <h1 class="logo_text">
+            <a th:href="@{/}">MEAN</a>
+        </h1>
+    </div>
+    <nav class="nav">
+        <ul class="gnb">
+            <li><a th:href="@{/}" class="home">HOME</a></li>
+            <li><a th:href="@{/introduce}" class="introduce">INTRODUCE</a></li>
+            <li><a th:href="@{/gallery}" class="gallery">GALLERY</a></li>
+            <li><a th:href="@{/board}" class="board">BOARD</a></li>
+            <li><a sec:authorize="isAnonymous()" th:href="@{/login}" class="login">LOGIN</a></li>
+            <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="logout">LOGOUT</a></li>
+            <li><a sec:authorize="isAnonymous()" th:href="@{/join}" class="join">JOIN</a></li>
+            <li><a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/mypage}" class="mypage">MYPAGE</a></li>
+            <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}" class="admin">ADMIN</a></li>
+        </ul>
+    </nav>
+    <span class="menu_toggle_btn">전체 메뉴 토글 버튼</span>
+</header>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalale=no">
+    <title>MEAN_INTRODUCE</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/introduce.css}">
+    <style type="text/css">
+        .gnb li .introduce {
+            font-weight: bold;
+            color: #1e88e2;
+        }
+    </style>
+    <link rel="shortcut icon" th:href="@{/images/favicon/favicon.ico}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{images/favicon/flat-design-touch.png}">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/flat.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+    <section th:insert="common/sns.html" class="sns_section"></section>
+    <header th:insert="common/header.html" id="header" class="header"></header>
+    <section class="sub_header_section">
+        <h2>Introduce</h2>
+        <ul class="breadcrum_list">
+            <li><a th:href="@{/}">Home /</a></li>
+            <li><a th:href="@{/introduce}">Introduce</a></li>
+        </ul>
+    </section>
+    <section class="content_section">
+        <div class="content_row_1">
+            <a href="">
+                <div class="info">
+                    <h3>When I was 6</h3>
+                    <span>- 2003</span>
+                </div>
+                <img src="images/s_images/introduce_01.png" alt="Age 6">
+            </a>
+            <h3>What is 'MEAN'?</h3>
+            <p>
+                'MEAN'이란 '~ 뜻이다', '~을 의미한다' 라는 뜻의 단어이다.
+                페이지 이름을 'MEAN'으로 선정한 이유는 이름 중 '민'이라는 글자가 영어 'MEAN'의 발음과 같고,
+                나를 표현하는 단어인 'ME'라는 단어가 들어가 있으며, 이 홈페이지에 나의 뜻을 담다는 의미에서
+                'MEAN'이라는 이름으로 페이지를 표현하게 되었다.
+            </p>
+        </div>
+        <div class="content_row_2">
+            <h3 class="title">Hobby</h3>
+            <div class="hobby_container">
+                <article>
+                    <a href="">
+                        <div class="info">
+                            <h3>MUSIC</h3>
+                            <span>- Listen to music<br>- Play the piano</span>
+                        </div>
+                        <img src="images/s_images/introduce_02.jpg" alt="">
+                    </a>
+                </article>
+                <article>
+                    <a href="">
+                        <div class="info">
+                            <h3>SOCCER</h3>
+                            <span>- Watch EPL<br>- Play soccer</span>
+                        </div>
+                        <img src="images/s_images/introduce_03.jpg" alt="">
+                    </a>
+                </article>
+                <article>
+                    <a href="">
+                        <div class="info">
+                            <h3>GAME</h3>
+                            <span>- Play a Game<br></span>
+                        </div>
+                        <img src="images/s_images/introduce_04.jpg" alt="">
+                    </a>
+                </article>
+            </div>
+        </div>
+        <div class="content_row_3">
+            <h4>Future Plans</h4>
+            <div class="para">
+                <p>
+                    어렸을 때 C언어를 배운 기억이 있어 다른 사람들보다 코딩에 접근하기 쉬운 편인 것 같다.
+                    대학교에서 배운 전공, 특히 웹 개발이나 프로그래밍을 잘 활용하여 관련 분야로 취업하고 싶다.
+                </p>
+                <p>
+                    I remember learning C language when I was young, so it seems to be easier to access coding than other people.
+                    I want to get a job in a related field by making good use of web development or programming.
+                </p>
+            </div>
+        </div>
+    </section>
+    <footer th:insert="common/footer.html" id="footer" class="footer"></footer>
+</div>
+</body>
+</html>

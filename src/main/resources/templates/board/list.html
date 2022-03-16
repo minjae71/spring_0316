@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">>
+<head>
+    <meta charset="UTF-8">
+    <title>MEAN_BOARD</title>
+
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+    <style type="text/css">
+        .gnb li .board {
+            font-weight: bold;
+            color: #1e88e2;
+        }
+    </style>
+    <link rel="shortcut icon" th:href="@{/images/favicon/favicon.ico}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/images/favicon/flat-design-touch.png}">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/flat.min.js"></script>
+    <script src="js/board.js" th:inline="javascript"></script>
+
+    <!--
+        - 앞에서 작성한 board.css를 불러오는 코드
+        - css, js, img 같은 정적 자원들을 src/main/resourses/static 경로에 저장하면 스프링 부트가 인식하게 된다
+    -->
+</head>
+<body>
+    <div id="wrap">
+        <section th:insert="common/sns.html" class="sns_section"></section>
+        <!-- Header -->
+        <header th:insert="common/header.html" id="header" class="header"></header>
+        <section class="sub_header_section">
+            <h2>Board</h2>
+            <ul class="breadcrum_list">
+                <li><a th:href="@{/}">Home /</a></li>
+                <li><a th:href="@{/board}">Board</a></li>
+            </ul>
+        </section>
+        <section class="content_section">
+            <!-- <div class="content_type">
+                <span class="type_box">
+                    <a th:href="@{/board?type=type1}">Type1</a>
+                    <a th:href="@{/board?type=type2}">Type2</a>
+                    <a th:href="@{/board?type=type3}">Type3</a>
+                    <a th:href="@{/board?type=type4}">Type4</a>
+                </span>
+            </div> -->
+            <br/>
+
+            <div class="content_row_1">
+                <div class="top_section">
+                    <div class="reset_button">
+                        <div class="total_count" th:text="'총 조회 개수 : ' + ${boardList.getTotalElements()} + '개'"></div>
+                    </div>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="excel_button">
+                        <form name="excel_download_form" th:action="@{/board/excel/download}" method="get">
+                            <input type="hidden" name="type" value="0" th:value="${type}">
+                            <input type="hidden" name="criteria" value="1" th:value="${criteria}">
+                            <input type="hidden" name="keyword" th:value="${keyword}">
+                            <input type="hidden" name="page" value="0" th:value="${page}">
+                            <input type="hidden" name="size" value="10" th:value="${size}">
+                            <input type="hidden" name="standard" value="id" th:value="${standard}">
+                            <input type="hidden" name="ascDesc" value="desc" th:value="${ascDesc}">
+                            <input type="hidden" name="sort"  value="id,desc" th:value="${sort}">
+                            <div class="reset_box"><button type="button" class="excel_upload" onclick="openUploadPopup()">Excel Upload</button></div>
+                            <!-- th:onclick="'location.href=\'' + @{'/board/excel/upload'} + '\''" -->
+                            <div class="reset_box"><button type="button" class="excel_download" onclick="applySelect(3)">Excel Download</button></div>
+                        </form>
+                    </div>
+                </div>
+                <form class="align_flex" name="align_select_form" th:action="@{/board}" method="get">
+                    <div class="align_left">
+                        <div class="reset_box"><a class="reset_count" th:href="@{/board}">초기화</a></div>
+                    </div>
+                    <div class="align_right">
+                        <div class="align_select">
+                            <input type="hidden" name="type" value="0" th:value="${type}">
+                            <input type="hidden" name="criteria" value="1" th:value="${criteria}">
+                            <input type="hidden" name="keyword" th:value="${keyword}">
+                            <input type="hidden" name="sort"  value="id,desc" th:value="${sort}">
+                            <div class="align_option">
+                                <select name="size" value="10" th:value="${size}" onchange="applySelect(1)">
+                                    <option value="10" th:selected="${size} == '10'">10개 출력</option>
+                                    <option value="30" th:selected="${size} == '30'">30개 출력</option>
+                                    <option value="50" th:selected="${size} == '50'">50개 출력</option>
+                                    <option value="100" th:selected="${size} == '100'">100개 출력</option>
+                                </select>
+                            </div>
+                            <div class="align_option">
+                                <select name="standard" value="id" th:value="${standard}" onchange="applySelect(1)">
+                                    <option value="id" th:selected="${standard} == 'id'">No</option>
+                                    <option value="type" th:selected="${standard} == 'type'">Type</option>
+                                    <option value="title" th:selected="${standard} == 'title'">Title</option>
+                                    <option value="writer" th:selected="${standard} == 'writer'">Writer</option>
+                                    <option value="createdDate" th:selected="${standard} == 'createdDate'">Date</option>
+                                    <option value="count" th:selected="${standard} == 'count'">View</option>
+                                </select>
+                            </div>
+                            <div class="align_option">
+                                <select name="ascDesc" value="desc" th:value="${ascDesc}" onchange="applySelect(1)">
+                                    <option value="desc" th:selected="${ascDesc} == 'desc'">내림차순</option>
+                                    <option value="asc" th:selected="${ascDesc} == 'asc'">오름차순</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <table class="board_table">
+                    <caption>다이어리</caption>
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Type</th>
+                        <th>Title</th>
+                        <th>Writer</th>
+                        <th>Date</th>
+                        <th>Views</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="board : ${boardList}">
+                        <td>
+                            <span th:text="${board.id}"></span>
+                        </td>
+                        <td>
+                            <span th:if="${board.type==1}" th:text="일반글"></span>
+                            <span th:if="${board.type==2}" th:text="공지글"></span>
+                            <span th:if="${board.type==3}" th:text="비밀글"></span>
+                            <span th:if="${board.type==4}" th:text="문의글"></span>
+                        </td>
+                        <td>
+                            <th:block th:if="${board.type==3}">
+                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{'board/' + ${board.id}}">
+                                    <span th:text="${board.title}"></span>
+                                </a>
+                                <a sec:authorize="hasRole('ROLE_MEMBER')" th:if="${board.writer}==${#authentication.name}" th:href="@{'board/' + ${board.id}}">
+                                    <span th:text="${board.title}"></span>
+                                </a>
+                                <span class="secret" sec:authorize="hasRole('ROLE_MEMBER')" th:unless="${board.writer}==${#authentication.name}">작성자만 열람할 수 있습니다.</span>
+                                <span class="secret" sec:authorize="isAnonymous()">작성자만 열람할 수 있습니다.</span>
+                            </th:block>
+                            <th:block th:unless="${board.type==3}">
+                                <a th:href="@{'board/' + ${board.id}}">
+                                    <span th:text="${board.title}"></span>
+                                </a>
+                            </th:block>
+                        </td>
+                        <td>
+                            <span th:text="${board.writer}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${board.count}"></span>
+                        </td>
+                    </tr>
+                    <tr th:if="${boardList==null || boardList.empty}">
+                        <td colspan="6">
+                            <span>데이터가 존재하지 않습니다.</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content_row_2">
+                <div class="search_box">
+                    <form name="search_select_form" th:action="@{/board}" method="get" onsubmit="return false">
+                        <input type="hidden" name="page" value="0" th:value="${page}">
+                        <input type="hidden" name="size" value="10" th:value="${size}">
+                        <input type="hidden" name="standard" value="id" th:value="${standard}">
+                        <input type="hidden" name="ascDesc" value="desc" th:value="${ascDesc}">
+                        <input type="hidden" name="sort" value="id,desc" th:value="${sort}">
+                        <div class="type_select_box">
+                            <!--<span id="typeText">ALL</span>
+                            <ul class="type_select_list">
+                                <li value="0"><a href="javascript:void(0);" onclick="typeChange(this, 0)">ALL</a></li>
+                                <li value="1"><a href="javascript:void(0);" onclick="typeChange(this, 1)">일반글</a></li>
+                                <li value="2"><a href="javascript:void(0);" onclick="typeChange(this, 2)">공지글</a></li>
+                                <li value="3"><a href="javascript:void(0);" onclick="typeChange(this, 3)">비밀글</a></li>
+                                <li value="4"><a href="javascript:void(0);" onclick="typeChange(this, 4)">문의글</a></li>
+                            </ul>-->
+                            <select name="type" value="0" th:value="${type}">
+                                <option value="0" th:selected="${type} == '0'">ALL</option>
+                                <option value="1" th:selected="${type} == '1'">일반글</option>
+                                <option value="2" th:selected="${type} == '2'">공지글</option>
+                                <option value="3" th:selected="${type} == '3'">비밀글</option>
+                                <option value="4" th:selected="${type} == '4'">문의글</option>
+                            </select>
+                        </div>
+                        <div class="search_select_box">
+                            <!--<span id="criteriaText">Filter</span>
+                            <ul class="search_select_list">
+                                <li value="1"><a href="javascript:void(0);" onclick="statusChange(this, 1)">제목</a></li>
+                                <li value="2"><a href="javascript:void(0);" onclick="statusChange(this, 2)">내용</a></li>
+                                <li value="3"><a href="javascript:void(0);" onclick="statusChange(this, 3)">제목+내용</a></li>
+                                <li value="4"><a href="javascript:void(0);" onclick="statusChange(this, 4)">작성자</a></li>
+                                <li value="5"><a href="javascript:void(0);" onclick="statusChange(this, 5)">댓글</a></li>
+                                <li value="6"><a href="javascript:void(0);" onclick="statusChange(this, 6)">닉네임</a></li>
+                                <li value="7"><a href="javascript:void(0);" onclick="statusChange(this, 7)">아이디</a></li>
+                                <li value="8"><a href="javascript:void(0);" onclick="statusChange(this, 8)">태그</a></li>
+                            </ul>-->
+                            <select name="criteria" value="1" th:value="${criteria}">
+                                <option value="1" th:selected="${criteria} == '1'">제목</option>
+                                <option value="2" th:selected="${criteria} == '2'">내용</option>
+                                <option value="3" th:selected="${criteria} == '3'">제목+내용</option>
+                                <option value="4" th:selected="${criteria} == '4'">작성자</option>
+                                <option value="5" th:selected="${criteria} == '5'">댓글</option>
+                                <option value="6" th:selected="${criteria} == '6'">닉네임</option>
+                                <option value="7" th:selected="${criteria} == '7'">아이디</option>
+                                <option value="8" th:selected="${criteria} == '8'">태그</option>
+                            </select>
+                        </div>
+                        <input type="search" name="keyword" class="search_window" placeholder="Search" th:value="${keyword}" onkeyup="applySelect(2)">
+                    </form>
+                </div>
+                <div class="write_box"><a th:href="@{board/edit}">Write</a></div>
+            </div>
+            <div class="content_row_3" th:with="start=${(boardList.number/maxPage)*maxPage + 1}, end=(${(boardList.totalPages == 0) ? 1 : (start + (maxPage - 1) < boardList.totalPages ? start + (maxPage - 1) : boardList.totalPages)})">
+                <!--<span th:if="${hasPrevious}" class="list_prev_btn" th:onclick="'location.href=\'' + @{'board?keyword=' + ${keyword} + '&page=' + ${previous}} + '\''">
+                    이전
+                </span>
+                <th:each="page: $
+                <a class="page_num" href="#">1</a>
+                <span th:if="${hasNext}" class="list_next_btn" th:onclick="'location.href=\'' + @{'board?keyword=' + ${keyword} + '&page=' + ${next}} + '\''">
+                    다음
+                </span>-->
+                <span th:if="${start > 1}" class="list_prev_btn" th:onclick="'location.href=\'' + @{'board?type=' + ${type} + '&keyword=' + ${keyword} + '&criteria=' + ${criteria} + '&page=0&size=' + ${size} + '&sort=' + ${standard} + ',' + ${ascDesc}} + '\''"></span>
+                <span th:if="${start > 1}" class="list_prev_btn" th:onclick="'location.href=\'' + @{'board?type=' + ${type} + '&keyword=' + ${keyword} + '&criteria=' + ${criteria} + '&page=' + ${start - maxPage - 1} + '&size=' + ${size} + '&sort=' + ${standard} + ',' + ${ascDesc}} + '\''"></span>
+                <th:block th:each="page: ${#numbers.sequence(start, end)}">
+                    <a class="page_num" th:href="@{'/board?type=' + ${type} + '&keyword=' + ${keyword} + '&criteria=' + ${criteria} + '&page=' + ${page-1} + '&size=' + ${size} + '&sort=' + ${standard} + ',' + ${ascDesc}}" th:text="${page}"></a>
+                </th:block>
+                <span th:if="${end < boardList.totalPages}" class="list_next_btn" th:onclick="'location.href=\'' + @{'board?type=' + ${type} + '&keyword=' + ${keyword} + '&criteria=' + ${criteria} + '&page=' + ${start + maxPage - 1} + '&size=' + ${size} + '&sort=' + ${standard} + ',' + ${ascDesc}} + '\''"></span>
+                <span th:if="${end < boardList.totalPages}" class="list_next_btn" th:onclick="'location.href=\'' + @{'board?type=' + ${type} + '&keyword=' + ${keyword} + '&criteria=' + ${criteria} + '&page=' + ${boardList.totalPages - 1} + '&size=' + ${size} + '&sort=' + ${standard} + ',' + ${ascDesc}} + '\''"></span>
+            </div>
+
+        </section>
+        <!-- Footer -->
+        <footer th:insert="common/footer.html" id="footer" class="footer"></footer>
+    </div>
+    <script type="text/javascript">
+        function typeChange(typeItem, typeNo) {
+            var typeText = $(typeItem).text();
+            $("#typeText").text(typeText);
+            $("#type").val(typeNo);
+        }
+        function statusChange(statusItem, criteriaNo) {
+            var criteriaText = $(statusItem).text();
+            $("#criteriaText").text(criteriaText);
+            $("#criteria").val(criteriaNo);
+        }
+    </script>
+</body>
+</html>

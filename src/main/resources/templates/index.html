@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>MEAN</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style type="text/css">
+        .gnb li .home {
+            font-weight: bold;
+            color: #1e88e2;
+        }
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="images/favicon/flat-design-touch.png">
+    <script src="js/flat.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+    <section class="sns_section">
+        <ul class="sns_list">
+            <li><a href="index.html"><img src="images/s_images/info_icon_01.png" alt="메인"></a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=100002078481159"><img src="images/s_images/info_icon_02.png" alt="페이스북"></a></li>
+            <li><a href="https://www.instagram.com/mingja2/"><img src="images/s_images/info_icon_03.png" alt="인스타그램"></a></li>
+            <li><a href="https://open.kakao.com/o/stuzKmjd"><img src="images/s_images/info_icon_04.png" alt="카카오톡"></a></li>
+        </ul>
+    </section>
+
+    <header th:insert="common/header.html" class="header">
+    </header>
+    <section class="slider_section">
+        <div class="slider_container">
+            <ul class="bxslider">
+                <li>
+                    <a href="#"><img src="images/p_images/slider_01.jpg" alt="슬라이드1" title="Binary"></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/p_images/slider_02.jpg" alt="슬라이드2" title="Editing"></a>
+                </li>
+                <li>
+                    <a href="#"></a><img src="images/p_images/slider_03.jpg" alt="슬라이드3" title="Programming"></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="major_section">
+        <h2 class="title">Major</h2>
+        <ul class="major_list">
+            <li><a href="https://multimedia.jangan.ac.kr/multimedia/index.do">I Major Computer Science at Jangan University</a></p></li>
+            <li>
+                <a href="https://www.jangan.ac.kr/">
+                    <div class="info">
+                        <h3>Jangan University</h3>
+                        <span>20172178_Kim Min Jae</span>
+                    </div>
+                    <img src="images/p_images/major_01.jpg" alt="장안대학교">
+                </a>
+            </li>
+        </ul>
+    </section>
+    <section class="subject_section">
+        <h2 class="title">Subject</h2>
+        <ul class="popular_post_list">
+            <li><a href="">Responsive Web</a></li>
+            <li><a href="">Mobile Contents</a></li>
+            <li><a href="">2D Animation</a></li>
+            <li><a href="">3D Animation</a></li>
+            <li><a href="">Computer Design</a></li>
+            <li><a href="">Motion Graphic</a></li>
+        </ul>
+    </section>
+    <section class="progress_section">
+        <h2 class="title">Progress</h2>
+        <ul class="progess-bars">
+            <li>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"><a href="#">Development 70%</a></div>
+                </div>
+            </li>
+            <li>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 65%;"><a href="">Design 65%</a></div>
+                </div>
+            </li>
+            <li>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"><a href="">Programming 75%</a></div>
+                </div>
+            </li>
+            <li>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><a href="">Animation 50%</a></div>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section class="keywords_section">
+        <h2 class="title">KeyWords</h2>
+        <ul class="keywords_list">
+            <li><a href="">#Programmer</a></li>
+            <li><a href="">#Engineer</a></li>
+            <li><a href="">#Video_editor</a></li>
+            <li><a href="">#Web_master</a></li>
+            <li><a href="">#Developer</a></li>
+            <li><a href="">#Programmer</a></li>
+            <li><a href="">#Architect</a></li>
+            <li><a href="">#Administrator</a></li>
+            <li><a href="">#Analyst</a></li>
+            <li><a href="">#Statistician</a></li>
+        </ul>
+    </section>
+    <section class="contact_section">
+        <h2 class="title">Contact</h2>
+        <div class="contact_container">
+            <div class="map_box">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5344.8309251706605!2d127.0952581193324!3d37.19891160068177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b45c77d2e0761%3A0xac888832ffeaf216!2z64-Z7YOE7Jet!5e0!3m2!1sko!2skr!4v1623135660202!5m2!1sko!2skr" style="border:0;" loading="lazy"></iframe>
+            </div>
+            <div class="form_box">
+                <form action="" method="">
+                    <ul class="form">
+                        <li><input type="text" id="name" placeholder="Name"></li>
+                        <li><input type="text" id="company" placeholder="Company"></li>
+                        <li><input type="email" id="email" placeholder="Email Address"></li>
+                        <li><textarea name="message" id="message" placeholder="Message"></textarea></li>
+                    </ul>
+                    <div class="send-btn">
+                        <button>SEND MESSAGE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <p>copyright&copy;
+            2021. Kim Min Jae all rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>

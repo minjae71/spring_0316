@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>MEAN_BOARD</title>
+
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/board_write.css}">
+    <style type="text/css">
+        .gnb li .board {
+            font-weight: bold;
+            color: #1e88e2;
+        }
+    </style>
+    <link rel="shortcut icon" th:href="@{/images/favicon/favicon.ico}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/images/favicon/flat-design-touch.png}">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/flat.min.js"></script>
+
+    <!--
+        - 앞에서 작성한 board.css를 불러오는 코드
+        - css, js, img 같은 정적 자원들을 src/main/resourses/static 경로에 저장하면 스프링 부트가 인식하게 된다
+    -->
+</head>
+<body>
+<div id="wrap">
+    <section th:insert="common/sns.html" class="sns_section"></section>
+    <!-- Header -->
+    <header th:insert="common/header.html" id="header" class="header"></header>
+    <section class="sub_header_section">
+        <h2>Board</h2>
+        <ul class="breadcrum_list">
+            <li><a th:href="@{/}">Home /</a></li>
+            <li><a th:href="@{/board}">Board</a></li>
+        </ul>
+    </section>
+    <section class="content_section">
+        <div class="content_container">
+            <div class="form_box">
+                <ul class="form">
+                    <input type="hidden" name="_method" value="put"/>
+                    <input type="hidden" name="id" th:value="${boardDto.id}"/>
+
+                    <li>
+                        분류<br/>
+                        <th:block th:if="${boardDto.type==1}">
+                            <input type="text" name="type" id="type1" value="일반글" disabled>
+                        </th:block>
+                        <th:block th:if="${boardDto.type==2}">
+                            <input type="text" name="type" id="type2" value="공지글" disabled>
+                        </th:block>
+                        <th:block th:if="${boardDto.type==3}">
+                            <input type="text" name="type" id="type3" value="비밀글" disabled>
+                        </th:block>
+                        <th:block th:if="${boardDto.type==4}">
+                            <input type="text" name="type" id="type4" value="문의글" disabled>
+                        </th:block>
+                    </li>
+                    <li>
+                        제목<br/>
+                        <input type="text" name="title" id="title" th:value="${boardDto.title}" disabled>
+                    </li>
+                    <li>
+                        작성자<br/>
+                        <input type="text" name="writer" id="writer" th:value="${boardDto.writer}" disabled>
+                    </li>
+                    <li>
+                        작성일<br/>
+                        <input type="text" name="createdDate" id="createdDate" th:value="${#temporals.format(boardDto.createdDate, 'yyyy-MM-dd HH:mm:ss')}" disabled>
+                    </li>
+                    <li th:unless="${boardDto.createdDate==boardDto.modifiedDate}">
+                        수정일<br/>
+                        <input type="text" name="modifiedDate" id="modifiedDate" th:value="${#temporals.format(boardDto.modifiedDate, 'yyyy-MM-dd HH:mm:ss')}" disabled>
+                    </li>
+                    <li>
+                        조회수<br/>
+                        <input type="text" name="count" id="count" th:value="${boardDto.count}+1" disabled>
+                    </li>
+                    <th:block  th:each="file : ${boardDto.files}">
+                    <li th:if="${file != null}" class="file_class">
+                        <th:block th:if="${file.fileType.equals('image')}">
+                            <img class="boardImage" th:src="${'/upload/image/' + file.filename}">
+                        </th:block>
+                        <th:block th:if="${file.fileType.equals('general')}">
+                            <span class="file_text">첨부파일 : </span> <a class="input_file" th:href="@{'/download/' + ${file.id}}" th:text="${file.originalFilename}"></a>
+                        </th:block>
+                    </li>
+                    </th:block>
+                    <li>
+                        내용<br/>
+                        <textarea name="content" id="content" th:text="${boardDto.content}" placeholder="Content" disabled></textarea>
+                    </li>
+                </ul>
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="send-btn">
+                        <a th:href="@{'/board/edit/' + ${boardDto.id}}">
+                            <button>REWRITE</button>
+                        </a>
+                    </div>
+                    <form name="delete-form" th:action="@{'/board/' + ${boardDto.id}}" method="post">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <div class="send-btn">
+                            <a th:href="@{'/board/edit/' + ${boardDto.id}}">
+                                <button name="delete-btn">DELETE</button>
+                            </a>
+                        </div>
+                    </form>
+                </th:block>
+                <th:block sec:authorize="hasRole('ROLE_MEMBER')">
+                    <div class="send-btn" th:if="${#authentication.name} == ${boardDto.writer}">
+                        <a th:href="@{'/board/edit/' + ${boardDto.id}}">
+                            <button>REWRITE</button>
+                        </a>
+                    </div>
+                    <form th:if="${#authentication.name} == ${boardDto.writer}" id="delete-form" th:action="@{'/board/' + ${boardDto.id}}" method="post">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <div class="send-btn">
+                            <a th:href="@{'/board/edit/' + ${boardDto.id}}">
+                                <button name="delete-btn">DELETE</button>
+                            </a>
+                        </div>
+                    </form>
+                </th:block>
+                <div class="send-btn">
+                    <a th:href="@{'/board'}">
+                        <button>BACK</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer th:insert="common/footer.html" id="footer" class="footer"></footer>
+</div>
+</body>
+</html>
+
+<!-- 변수 셋팅 -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var boardDto = /*[[${boardDto}]]*/ "";
+    /*]]>*/
+</script>
+

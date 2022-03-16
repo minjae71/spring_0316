@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>MEAN_BOARD</title>
+
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/board_write.css}">
+    <style type="text/css">
+        .gnb li .board {
+            font-weight: bold;
+            color: #1e88e2;
+        }
+    </style>
+    <link rel="shortcut icon" th:href="@{/images/favicon/favicon.ico}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/images/favicon/flat-design-touch.png}">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/flat.min.js"></script>
+
+    <!--
+        - 앞에서 작성한 board.css를 불러오는 코드
+        - css, js, img 같은 정적 자원들을 src/main/resourses/static 경로에 저장하면 스프링 부트가 인식하게 된다
+    -->
+</head>
+<body>
+<div id="wrap">
+    <section th:insert="common/sns.html" class="sns_section"></section>
+    <!-- Header -->
+    <header th:insert="common/header.html" id="header" class="header"></header>
+    <section class="sub_header_section">
+        <h2>Board</h2>
+        <ul class="breadcrum_list">
+            <li><a th:href="@{/}">Home /</a></li>
+            <li><a th:href="@{/board}">Board</a></li>
+        </ul>
+    </section>
+    <section class="content_section">
+        <div class="content_container">
+            <div class="form_box">
+                <form th:action="@{'/board/edit/' + ${boardDto.id}}" method="post">
+                    <ul class="form">
+                        <input type="hidden" name="_method" value="put"/>
+                        <input type="hidden" name="id" th:value="${boardDto.id}"/>
+
+                        <li>
+                            <select name="type" required>
+                                <option value="1" th:selected="${boardDto.type}==1">일반글</option>
+                                <option value="2" th:selected="${boardDto.type}==2">공지글</option>
+                                <option value="3" th:selected="${boardDto.type}==3">비밀글</option>
+                                <option value="4" th:selected="${boardDto.type}==4">문의글</option>
+                            </select>
+                            <li><input type="text" name="title" id="title" th:value="${boardDto.title}" placeholder="Title" maxlength="100" required></li>
+                        </li>
+                        <li><input type="text" name="writer" id="writer" th:value="${boardDto.writer}" placeholder="Writer" maxlength="10" required></li>
+                        <li><textarea name="content" id="content" th:text="${boardDto.content}" placeholder="Content" required></textarea></li>
+                    </ul>
+                    <div class="send-btn">
+                        <button type="submit">WRITE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer th:insert="common/footer.html" id="footer" class="footer"></footer>
+</div>
+</body>
+</html>
